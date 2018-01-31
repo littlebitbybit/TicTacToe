@@ -1,15 +1,15 @@
 plays = [[" " for r in range(3)] for c in range(3)] 
 
 def print_board():
-	print(plays[0][0] + ' | ' + plays[0][1] + '| ' + plays[0][2])
-	print('__' + '|' + '__' + '|' + '__')
-	print(plays[1][0] + ' | ' + plays[1][1] + '| ' + plays[1][2])
-	print('__' + '|' + '__' + '|' + '__')
-	print(plays[2][0] + ' | ' + plays[2][1] + '| ' + plays[2][2])
-	print('  ' + '|' + '  ' + '|' + '  ')
+	print(plays[0][0] + ' | ' + plays[0][1] + ' | ' + plays[0][2])
+	print('__' + '|' + '___' + '|' + '__')
+	print(plays[1][0] + ' | ' + plays[1][1] + ' | ' + plays[1][2])
+	print('__' + '|' + '___' + '|' + '__')
+	print(plays[2][0] + ' | ' + plays[2][1] + ' | ' + plays[2][2])
+	print('  ' + '|' + '   ' + '|' + '  ')
 
 def make_move(row, col, player):
-	#currently allows you to make move if someone already made a move there
+	assert plays[row][col] == " ", 'Slot is already filled!'
 	plays[row][col] = player
 
 
@@ -37,15 +37,20 @@ def start():
 		else:
 			print("Player 2 (o): ")
 
-		try:
-			move_row = int(input("Row: "))
-			move_col = int(input("Col: "))
-			#currently allows you to input ints past 2
-		except:
-			print ("input valid number between 0-2")
+		move_row = None
+		move_col = None
+		while move_row is None or move_col is None:
+			try:
+				move_row = int(input("Row: "))
+				assert 0 <= move_row <= 2, 'Invalid row (Must be between 0-2)'
+				move_col = int(input("Col: "))
+				assert 0 <= move_col <= 2, 'Invalid column (Must be between 0-2)'
 
+				make_move(move_row, move_col, current_player)
+			except (TypeError, AssertionError) as e:
+				print(e)
+				move_col = move_row = None
 
-		make_move(move_row, move_col, current_player)
 		print_board()
 		if check_win():
 			print(current_player + " won!")
@@ -55,7 +60,7 @@ def start():
 			if turn_x:
 				current_player = 'x'
 			else:
-				current_player = 'y'
+				current_player = 'o'
 
 start()
 
