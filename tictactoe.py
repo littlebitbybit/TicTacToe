@@ -23,6 +23,8 @@ def check_win():
 			return True
 	if plays[0][0] == plays[1][1] and plays[1][1] == plays[2][2]  and plays[0][0] != " ":
 		return True
+	if plays[0][2] == plays[1][1] and plays[1][1] == plays[2][0]  and plays[0][2] != " ":
+		return True
 	return False
 
 
