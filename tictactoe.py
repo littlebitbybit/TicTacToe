@@ -27,6 +27,12 @@ def check_win():
 		return True
 	return False
 
+def check_tie():
+	for rows in plays:
+		for col in rows:
+			if col == ' ':
+				return False
+	return True
 
 def start():
 	turn_x = True
@@ -56,6 +62,9 @@ def start():
 		print_board()
 		if check_win():
 			print(current_player + " won!")
+			break
+		elif check_tie():
+			print("tie!")
 			break
 		else:
 			turn_x = not turn_x
